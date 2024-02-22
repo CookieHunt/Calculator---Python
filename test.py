@@ -164,7 +164,7 @@ def main():
     button0.grid(row=3, column=0)
     buttonDot = Button(frame, image=imagedot, width=100, height=100, command=lambda: calculator.isfloat())
     buttonDot.grid(row=3, column=1)
-    buttonAdd = Button(frame, image=imageadd, width=100, height=100, calculator.simpleaction('add'))
+    buttonAdd = Button(frame, image=imageadd, width=100, height=100, command=lambda: calculator.simpleaction('add'))
     buttonAdd.grid(row=3, column=2)
     buttonEqu = Button(frame, image=imageequ, width=100, height=100, command=lambda: calculator.equal())
     buttonEqu.grid(row=3, column=3)
