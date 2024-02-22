@@ -1,9 +1,4 @@
 from tkinter import *
-import math
-
-
-def click(what):
-    print("You clicked" + what)
 
 
 class Calculator:
@@ -25,7 +20,7 @@ class Calculator:
                 self.variable = self.variable * 10 + number
                 print(self.variable)
                 self.variablestring += str(number)
-                #print(self.variablestring)
+                # print(self.variablestring)
                 self.display()
             else:
                 self.variable = self.variable + number / self.float
@@ -38,7 +33,7 @@ class Calculator:
                 self.secondvariable = self.secondvariable * 10 + number
                 print(self.secondvariable)
                 self.variablestring += str(number)
-                #print(self.variablestring)
+                # print(self.variablestring)
                 self.display()
             else:
                 self.secondvariable = self.secondvariable + number / self.float
@@ -47,7 +42,6 @@ class Calculator:
                 self.float *= 10
                 self.display()
 
-
     def isfloat(self):
         if self.float == 0:
             self.float = 10
@@ -55,22 +49,60 @@ class Calculator:
             self.display()
 
     def simpleaction(self, action):
-        self.operation = action
-        self.variablestring = ''
-        self.variabletoshow.set('0')
+        if self.operation == 'num':
+            self.operation = action
+            self.secondvariable = 0.0
+            self.variablestring = ''
+            self.variabletoshow.set('0')
+            self.float = 0
+
+
+    def equal(self):
+
+        if self.operation == 'add':
+            self.variable += self.secondvariable
+            self.secondvariable = 0.0
+            self.variablestring = str(self.variable)
+            self.display()
+            self.operation = 'num'
+
+        elif self.operation == 'sub':
+            self.variable -= self.secondvariable
+            self.secondvariable = 0.0
+            self.variablestring = str(self.variable)
+            self.display()
+            self.operation = 'num'
+        elif self.operation == 'mul':
+
+            self.variable *= self.secondvariable
+            self.secondvariable = 0.0
+            self.variablestring = str(self.variable)
+            self.display()
+            self.operation = 'num'
+        elif self.operation == 'div':
+            try:
+                self.variable /= self.secondvariable
+                self.secondvariable = 0.0
+                self.variablestring = str(self.variable)
+                self.display()
+                self.operation = 'num'
+            except ZeroDivisionError:
+                self.variable = 0.0
+                self.secondvariable = 0.0
+                self.variablestring = ''
+                self.variabletoshow.set('0')
+
+        elif self.operation == 'num':
+            self.variable = 0.0
+            self.secondvariable = 0.0
+            self.variablestring = ''
+            self.variabletoshow.set('0')
+
         self.float = 0
-
-
-
-
-
-
 
 
 def main():
     print('Hello World!')
-
-
 
     window = Tk()
     window.title('Calculator')
@@ -93,7 +125,7 @@ def main():
     button8.grid(row=0, column=1)
     button9 = Button(frame, image=image, width=30, height=30, command=lambda: calculator.addnumber(9))
     button9.grid(row=0, column=2)
-    buttonDiv = Button(frame, image=image, width=30, height=30, command=lambda: click("7"))
+    buttonDiv = Button(frame, image=image, width=30, height=30, command=lambda: calculator.simpleaction('div'))
     buttonDiv.grid(row=0, column=3)
     button4 = Button(frame, image=image, width=30, height=30, command=lambda: calculator.addnumber(4))
     button4.grid(row=1, column=0)
@@ -101,7 +133,7 @@ def main():
     button5.grid(row=1, column=1)
     button6 = Button(frame, image=image, width=30, height=30, command=lambda: calculator.addnumber(6))
     button6.grid(row=1, column=2)
-    buttonMul = Button(frame, image=image, width=30, height=30, command=lambda: click("7"))
+    buttonMul = Button(frame, image=image, width=30, height=30, command=lambda: calculator.simpleaction('mul'))
     buttonMul.grid(row=1, column=3)
     button1 = Button(frame, image=image, width=30, height=30, command=lambda: calculator.addnumber(1))
     button1.grid(row=2, column=0)
@@ -109,7 +141,7 @@ def main():
     button2.grid(row=2, column=1)
     button3 = Button(frame, image=image, width=30, height=30, command=lambda: calculator.addnumber(3))
     button3.grid(row=2, column=2)
-    buttonSub = Button(frame, image=image, width=30, height=30, command=lambda: click("7"))
+    buttonSub = Button(frame, image=image, width=30, height=30, command=lambda: calculator.simpleaction('sub'))
     buttonSub.grid(row=2, column=3)
     button0 = Button(frame, image=image, width=30, height=30, command=lambda: calculator.addnumber(0))
     button0.grid(row=3, column=0)
@@ -117,7 +149,7 @@ def main():
     buttonDot.grid(row=3, column=1)
     buttonAdd = Button(frame, image=image, width=30, height=30, command=lambda: calculator.simpleaction('add'))
     buttonAdd.grid(row=3, column=2)
-    buttonEqu = Button(frame, image=image, width=30, height=30, command=lambda: click("7"))
+    buttonEqu = Button(frame, image=image, width=30, height=30, command=lambda: calculator.equal())
     buttonEqu.grid(row=3, column=3)
 
     window.mainloop()
