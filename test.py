@@ -9,6 +9,7 @@ def click(what):
 class Calculator:
     def __init__(self):
         self.variable = 0.0
+        self.operation = 'num'
         self.secondvariable = 0.0
         self.float = 0
         self.variablestring = ''
@@ -19,24 +20,49 @@ class Calculator:
         self.variabletoshow.set(self.variablestring)
 
     def addnumber(self, number):
-        if self.float == 0:
-            self.variable = self.variable*10 + number
-            print(self.variable)
-            self.variablestring += str(number)
-            print(self.variablestring)
-            self.display()
+        if self.operation == 'num':
+            if self.float == 0:
+                self.variable = self.variable * 10 + number
+                print(self.variable)
+                self.variablestring += str(number)
+                #print(self.variablestring)
+                self.display()
+            else:
+                self.variable = self.variable + number / self.float
+                print(self.variable)
+                self.variablestring += str(number)
+                self.float *= 10
+                self.display()
         else:
-            self.variable = self.variable + number/self.float
-            print(self.variable)
-            self.variablestring += str(number)
-            self.float *= 10
-            self.display()
+            if self.float == 0:
+                self.secondvariable = self.secondvariable * 10 + number
+                print(self.secondvariable)
+                self.variablestring += str(number)
+                #print(self.variablestring)
+                self.display()
+            else:
+                self.secondvariable = self.secondvariable + number / self.float
+                print(self.secondvariable)
+                self.variablestring += str(number)
+                self.float *= 10
+                self.display()
+
 
     def isfloat(self):
         if self.float == 0:
             self.float = 10
             self.variablestring += str('.')
             self.display()
+
+    def simpleaction(self, action):
+        self.operation = action
+        self.variablestring = ''
+        self.variabletoshow.set('0')
+        self.float = 0
+
+
+
+
 
 
 
@@ -89,7 +115,7 @@ def main():
     button0.grid(row=3, column=0)
     buttonDot = Button(frame, image=image, width=30, height=30, command=lambda: calculator.isfloat())
     buttonDot.grid(row=3, column=1)
-    buttonAdd = Button(frame, image=image, width=30, height=30, command=lambda: click("7"))
+    buttonAdd = Button(frame, image=image, width=30, height=30, command=lambda: calculator.simpleaction('add'))
     buttonAdd.grid(row=3, column=2)
     buttonEqu = Button(frame, image=image, width=30, height=30, command=lambda: click("7"))
     buttonEqu.grid(row=3, column=3)
